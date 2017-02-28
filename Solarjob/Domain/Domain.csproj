@@ -40,12 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Command.cs" />
-    <Compile Include="Enums\CommandState.cs" />
-    <Compile Include="Models\CreateFile.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\SendMessage.cs" />
+    <Compile Include="Attributes\TaskNameAttribute.cs" />
+    <Compile Include="Attributes\TaskVersionAttribute.cs" />
+    <Compile Include="Models\Params\New.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Enums\CommandState.cs" />
+    <Compile Include="Models\Params\CreateFile.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\Params\SendMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

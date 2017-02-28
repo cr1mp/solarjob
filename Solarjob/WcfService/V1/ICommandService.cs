@@ -15,7 +15,7 @@ namespace WcfService.V1
 		[OperationContract]
 		void Fail(Guid commandId);
 
-		void AddCommand(SendMessageCommandDto createCommandDto);
-		void AddCommand(CreateFileCommandDto createCommandDto);
+		void AddCommand(SendMessageCommandDto command);
+		void AddCommand(CreateFileCommandDto command);
 	}
 }

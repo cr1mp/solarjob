@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Commands
+namespace Utility.Deserializer
 {
-	public class SendMessageTaskCreateCommand
+	public interface IDeserializer
 	{
-
+		T Deserialize<T>(string s);
 	}
 }

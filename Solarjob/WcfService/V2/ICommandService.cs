@@ -11,6 +11,6 @@ namespace WcfService.V2
 	[ServiceContract]
 	public interface ICommandService : V1.ICommandService
 	{
-		void AddCommand(NewCommandDto newCommandDto);
+		void AddCommand(NewCommandDto command);
 	}
 }

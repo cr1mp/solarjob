@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Commands
 {
-	public class NewTaskCreateCommand
+	public class DoneCommand
 	{
+		public DoneCommand(Guid taskId)
+		{
+			TaskId = taskId;
+		}
+		public Guid TaskId { get; set; }
 	}
 }
