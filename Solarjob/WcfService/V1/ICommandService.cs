@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ServiceModel;
+using WcfServer.V1.Dtos;
 
-namespace WcfService.V1
+namespace WcfServer.V1
 {
 	[ServiceContract]
 	public interface ICommandService
@@ -15,7 +16,10 @@ namespace WcfService.V1
 		[OperationContract]
 		void Fail(Guid commandId);
 
-		void AddCommand(SendMessageCommandDto command);
-		void AddCommand(CreateFileCommandDto command);
+		[OperationContract(Name = "AddSendMessageTask")]
+		void AddTask(SendMessageCommandDto command);
+
+		[OperationContract(Name = "AddCreateFileTask")]
+		void AddTask(CreateFileCommandDto command);
 	}
 }

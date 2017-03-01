@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9CE6B1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{495552C3-738B-4628-B53F-1BCCD0DEF41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfService", "WcfService\WcfService.csproj", "{ED2A7BF7-03E1-46CD-9A13-EE0C24D07005}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServer", "WcfService\WcfServer.csproj", "{ED2A7BF7-03E1-46CD-9A13-EE0C24D07005}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{872714E2-DF7E-4865-8A94-70F4BCE0550A}"
 EndProject
@@ -66,5 +66,8 @@ Global
 		{495552C3-738B-4628-B53F-1BCCD0DEF41F} = {9CE6B167-E2CE-451B-9DB6-BE20F8D591F6}
 		{ED2A7BF7-03E1-46CD-9A13-EE0C24D07005} = {2675C86A-70EA-40C7-A39C-78AB6280C793}
 		{688E9E21-BFA2-49A5-9AE9-D7F33703CA0F} = {872714E2-DF7E-4865-8A94-70F4BCE0550A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

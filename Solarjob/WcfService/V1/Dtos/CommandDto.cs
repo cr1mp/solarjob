@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace WcfService.V1
+namespace WcfServer.V1.Dtos
 {
 	[DataContract]
 	public class CommandDto

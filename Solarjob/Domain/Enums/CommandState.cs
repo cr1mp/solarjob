@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-	public enum CommandState
+	public enum TaskState
 	{
 		New,
 		InProcess,

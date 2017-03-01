@@ -1,28 +1,59 @@
 ﻿using System;
+using BLL.Commands.ChangeState;
+using BLL.Commands.Create;
+using BLL.Components;
+using BLL.Queries;
+using WcfServer.V1.Dtos;
 
-namespace WcfService.V1
+namespace WcfServer.V1
 {
 	// NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
 	public class CommandService : ICommandService
 	{
-		public virtual void AddCommand(SendMessageCommandDto createCommandDto)
+		protected readonly TaskCommandHandlers _taskCommandHandlers;
+		protected readonly TaskQueryHandlers _taskQueryHandlers;
+
+		public CommandService(TaskCommandHandlers taskCommandHandlers, TaskQueryHandlers taskQueryHandlers )
 		{
-			throw new NotImplementedException();
+			_taskCommandHandlers = taskCommandHandlers;
+			_taskQueryHandlers = taskQueryHandlers;
 		}
 
-		public virtual void Done(Guid commandId)
+		public CommandDto GetCommand()
 		{
-			throw new NotImplementedException();
+			var task = _taskQueryHandlers.Handle(new GetNewTaskQuery(1));
+			if (task == null)
+			{
+				return null;
+			}
+
+			_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id));
+
+			return new CommandDto();
 		}
 
-		public virtual void Fail(Guid commandId)
+		public void Done(Guid commandId)
 		{
-			throw new NotImplementedException();
+			_taskCommandHandlers.Handle(new SetStateDoneCommand(commandId));
 		}
 
-		public virtual CommandDto GetCommand()
+		public void Fail(Guid commandId)
 		{
-			throw new NotImplementedException();
+			_taskCommandHandlers.Handle(new SetStateNewCommand(commandId));
+		}
+
+		public void AddTask(SendMessageCommandDto command)
+		{
+			_taskCommandHandlers.Handle(new SendMessageTaskCreateCommand(command.StartTime,
+																		command.Address,
+																		command.Message,
+																		command.Theme));
+		}
+
+		public void AddTask(CreateFileCommandDto command)
+		{
+			_taskCommandHandlers.Handle(new CreateFileTaskCreateCommand(command.StartTime,
+																		command.Name));
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace Domain.Models
 {
 	public class Task:Entity
 	{
-		public CommandState State { get; set; }
+		public TaskState State { get; set; }
 
 		public int Version { get; set; }
 

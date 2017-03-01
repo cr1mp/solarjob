@@ -48,11 +48,16 @@
     <Compile Include="Deserializer\IDeserializer.cs" />
     <Compile Include="Deserializer\JsonDeserializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reposutory\RepositoryExtensions.cs" />
     <Compile Include="Serializer\ISerializer.cs" />
     <Compile Include="Serializer\JsonSerializer.cs" />
     <Compile Include="Serializer\XmlSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{8ECDF1CB-1688-4EFC-95BA-97CA56FE58FE}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{495552c3-738b-4628-b53f-1bccd0def41f}</Project>
       <Name>Domain</Name>

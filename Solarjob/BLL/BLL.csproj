@@ -48,8 +48,13 @@
     <Compile Include="Commands\Create\SendMessageTaskCreateCommand.cs" />
     <Compile Include="Commands\Create\NewTaskCreateCommand.cs" />
     <Compile Include="Commands\Create\StartTimeCommand.cs" />
-    <Compile Include="Commands\UpdateStateCommand.cs" />
-    <Compile Include="Components\CommandComponent.cs" />
+    <Compile Include="Commands\ChangeState\SetStateNewCommand.cs" />
+    <Compile Include="Commands\ChangeState\SetStateDoneCommand.cs" />
+    <Compile Include="Queries\GetNewTaskQuery.cs" />
+    <Compile Include="Infrastructure\QueryHandlers\IQueryHandler.cs" />
+    <Compile Include="Components\TaskCommandHandlers.cs" />
+    <Compile Include="Commands\ChangeState\SetStateInProcessCommand.cs" />
+    <Compile Include="Components\TaskQueryComponent.cs" />
     <Compile Include="Infrastructure\CommandHandlers\ICommandHandler.cs" />
     <Compile Include="Mapper\BllAutoMapperProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +76,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

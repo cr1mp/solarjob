@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using BLL.Commands;
+using BLL.Commands.ChangeState;
 using BLL.Commands.Create;
 using BLL.Infrastructure.CommandHandlers;
 using DAL.Abstraction;
@@ -14,17 +15,19 @@ using Utility;
 
 namespace BLL.Components
 {
-	public class CommandComponent:ICommandHandler<SendMessageTaskCreateCommand>,
+	public partial class TaskCommandHandlers:ICommandHandler<SendMessageTaskCreateCommand>,
 								  ICommandHandler<CreateFileTaskCreateCommand>,
 								  ICommandHandler<NewTaskCreateCommand>,
-								  ICommandHandler<DoneCommand>
+								  ICommandHandler<SetStateDoneCommand>,
+								  ICommandHandler<SetStateInProcessCommand>,
+								  ICommandHandler<SetStateNewCommand>
 
 	{
 		private readonly EntityRepository<Task, Guid> _taskRepository;
 		private readonly ISerializer _serializer;
 		private readonly IMapper _mapper;
 
-		public CommandComponent(EntityRepository<Task,Guid> taskRepository,
+		public TaskCommandHandlers(EntityRepository<Task,Guid> taskRepository,
 								ISerializer serializer,
 								IMapper mapper)
 		{
@@ -54,7 +57,7 @@ namespace BLL.Components
 		private void AddNewTask(object param, DateTime start)
 		{
 			var task = new Task();
-			task.State = CommandState.New;
+			task.State = TaskState.New;
 			task.StartTime = start;
 			task.Name = param.GetTaskName();
 			task.Version = param.GetStartVersion();
@@ -63,7 +66,7 @@ namespace BLL.Components
 			_taskRepository.Add(task);
 		}
 
-		public void Handle(DoneCommand command)
+		public void Handle(SetStateDoneCommand command)
 		{
 			var task = _taskRepository.GetByIdOrNull(command.TaskId);
 
@@ -72,12 +75,46 @@ namespace BLL.Components
 				throw new NullReferenceException();
 			}
 
-			if (task.State != CommandState.InProcess)
+			if (task.State != TaskState.InProcess)
 			{
 				throw new InvalidOperationException();
 			}
 
-			task.State = CommandState.Done;
+			task.State = TaskState.Done;
+		}
+
+		public void Handle(SetStateInProcessCommand command)
+		{
+			var task = _taskRepository.GetByIdOrNull(command.TaskId);
+
+			if (task == null)
+			{
+				throw new NullReferenceException();
+			}
+
+			if (task.State != TaskState.New)
+			{
+				throw new InvalidOperationException();
+			}
+
+			task.State = TaskState.InProcess;
+		}
+
+		public void Handle(SetStateNewCommand command)
+		{
+			var task = _taskRepository.GetByIdOrNull(command.TaskId);
+
+			if (task == null)
+			{
+				throw new NullReferenceException();
+			}
+
+			if (task.State != TaskState.InProcess)
+			{
+				throw new InvalidOperationException();
+			}
+
+			task.State = TaskState.New;
 		}
 	}
 }

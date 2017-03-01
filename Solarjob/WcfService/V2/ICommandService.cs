@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using WcfService.V1;
+﻿using System.ServiceModel;
+using WcfServer.V2.Dtos;
 
-namespace WcfService.V2
+namespace WcfServer.V2
 {
 	[ServiceContract]
 	public interface ICommandService : V1.ICommandService
 	{
-		void AddCommand(NewCommandDto command);
+		[OperationContract(Name = "AddNewTask")]
+		void AddTask(NewCommandDto command);
 	}
 }
