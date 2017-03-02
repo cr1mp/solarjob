@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Commands.Create;
+using BLL.Dtos;
+using Domain.Models;
 using Domain.Models.Params;
 
 namespace BLL.Mapper
@@ -16,6 +17,7 @@ namespace BLL.Mapper
 			CreateMap<SendMessageTaskCreateCommand, SendMessage>();
 			CreateMap<CreateFileTaskCreateCommand, CreateFile>();
 			CreateMap<NewTaskCreateCommand, New> ();
+			CreateMap<Task, TaskDto> ();
 		}
 	}
 }

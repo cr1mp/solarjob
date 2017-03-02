@@ -34,6 +34,22 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,16 +66,22 @@
     <Compile Include="Commands\Create\StartTimeCommand.cs" />
     <Compile Include="Commands\ChangeState\SetStateNewCommand.cs" />
     <Compile Include="Commands\ChangeState\SetStateDoneCommand.cs" />
+    <Compile Include="Container\BLLInitialization.cs" />
+    <Compile Include="Dtos\TaskDto.cs" />
     <Compile Include="Queries\GetNewTaskQuery.cs" />
     <Compile Include="Infrastructure\QueryHandlers\IQueryHandler.cs" />
     <Compile Include="Components\TaskCommandHandlers.cs" />
     <Compile Include="Commands\ChangeState\SetStateInProcessCommand.cs" />
-    <Compile Include="Components\TaskQueryComponent.cs" />
+    <Compile Include="Components\TaskQueryHandlers.cs" />
     <Compile Include="Infrastructure\CommandHandlers\ICommandHandler.cs" />
     <Compile Include="Mapper\BllAutoMapperProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAL.Abstraction\DAL.Abstraction.csproj">
+      <Project>{9ea8e915-2d4c-43f4-b0a2-f7b0babba0c9}</Project>
+      <Name>DAL.Abstraction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{8ECDF1CB-1688-4EFC-95BA-97CA56FE58FE}</Project>
       <Name>DAL</Name>

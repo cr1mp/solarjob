@@ -5,6 +5,7 @@ using BLL.Commands;
 using BLL.Commands.ChangeState;
 using BLL.Commands.Create;
 using BLL.Components;
+using BLL.Dtos;
 using BLL.Infrastructure.CommandHandlers;
 using BLL.Infrastructure.QueryHandlers;
 using BLL.Mapper;
@@ -13,6 +14,7 @@ using DAL.Abstraction;
 using Domain.Enums;
 using Domain.Models.Params;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Telerik.JustMock;
 using Utility.Deserializer;
 using Utility.Serializer;
 using Task = Domain.Models.Task;
@@ -22,16 +24,30 @@ namespace BLL.Test
 	[TestClass]
 	public class CommandTest
 	{
+		private IMapper _mapper;
+		private ISerializer _serializer;
+		private IUnitOfWorkFactory _factory;
+
+		[TestInitialize()]
+		public void Initialize()
+		{
+			var config = new MapperConfiguration(cfg => cfg.AddProfile(new BllAutoMapperProfile()));
+			_mapper = config.CreateMapper();
+			_serializer = new JsonSerializer();
+			_factory = Mock.Create<IUnitOfWorkFactory>();
+		}
+
 		[TestMethod]
 		public void CreateSendMessageTask()
 		{
 			var start = DateTime.Now;
 
 			EntityRepository<Task,Guid> taskRepository = new InMemoryRepository<Task>();
-			var config = new MapperConfiguration(cfg =>cfg.AddProfile(new BllAutoMapperProfile()));
+			
 			ICommandHandler<SendMessageTaskCreateCommand> commandHandler = new TaskCommandHandlers(taskRepository,
-																								new JsonSerializer(),
-																								config.CreateMapper());
+																								_serializer,
+																								_mapper,
+																								_factory);
 
 			var command = new SendMessageTaskCreateCommand(start,"address","message", "theme");
 			commandHandler.Handle(command);
@@ -58,10 +74,11 @@ namespace BLL.Test
 			var start = DateTime.Now;
 
 			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
-			var config = new MapperConfiguration(cfg => cfg.AddProfile(new BllAutoMapperProfile()));
+			
 			ICommandHandler<CreateFileTaskCreateCommand> commandHandler = new TaskCommandHandlers(taskRepository,
-																								new JsonSerializer(),
-																								config.CreateMapper());
+																								_serializer,
+																								_mapper,
+																								_factory);
 
 			var command = new CreateFileTaskCreateCommand(start, "name");
 			commandHandler.Handle(command);
@@ -86,10 +103,11 @@ namespace BLL.Test
 			var start = DateTime.Now;
 
 			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
-			var config = new MapperConfiguration(cfg => cfg.AddProfile(new BllAutoMapperProfile()));
+
 			ICommandHandler<NewTaskCreateCommand> commandHandler = new TaskCommandHandlers(taskRepository,
-																								new JsonSerializer(),
-																								config.CreateMapper());
+																							_serializer,
+																							_mapper,
+																							_factory);
 
 			var command = new NewTaskCreateCommand(start);
 			commandHandler.Handle(command);
@@ -113,15 +131,16 @@ namespace BLL.Test
 		{
 			Guid taskId=Guid.Parse("{E79904A7-F442-454E-B8EF-01B1C1AACDD4}");
 			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
-			var config = new MapperConfiguration(cfg => cfg.AddProfile(new BllAutoMapperProfile()));
+			
 			taskRepository.Add(new Task
 			{
 				Id = taskId,
 				State = TaskState.New
 			});
 			TaskCommandHandlers taskCommandComponent = new TaskCommandHandlers(taskRepository,
-																								new JsonSerializer(),
-																								config.CreateMapper());
+																				_serializer,
+																				_mapper,
+																				_factory);
 
 
 			ICommandHandler<SetStateInProcessCommand> setStateInProcessCommandHandler1 = taskCommandComponent;
@@ -158,11 +177,13 @@ namespace BLL.Test
 		{
 			var task1V1 = new Task
 			{
+				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 16"),
 				Version = 1
 			};
 			var task2V1 = new Task
 			{
+				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 17"),
 				Version = 1
 			};
@@ -170,17 +191,20 @@ namespace BLL.Test
 
 			var task1V2 = new Task
 			{
+				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 17"),
 				Version = 2
 			};
 			var task2V2 = new Task
 			{
+				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 16"),
 				Version = 2
 			};
 
 			var task1V3 = new Task
 			{
+				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("2018 10 16"),
 				Version = 3
 			};
@@ -194,26 +218,30 @@ namespace BLL.Test
 
 			taskRepository.Add(task1V3);
 
-			IQueryHandler<GetNewTaskQuery, Task> taskCommandComponent = new TaskQueryHandlers(taskRepository);
+			IQueryHandler<GetNewTaskQuery, TaskDto> taskCommandComponent = new TaskQueryHandlers(taskRepository,_mapper, _factory);
 
-			var task = taskCommandComponent.Handle(new GetNewTaskQuery(1));
+			var taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(1));
+			var task = taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task1V1, task);
 			task.State=TaskState.InProcess;
 
-			task = taskCommandComponent.Handle(new GetNewTaskQuery(2));
+			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(2));
+			task = taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task2V2, task);
 			task.State = TaskState.Done;
 
-			task = taskCommandComponent.Handle(new GetNewTaskQuery(1));
+			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(1));
+			task = taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task2V1, task);
 			task.State = TaskState.Done;
 
-			task = taskCommandComponent.Handle(new GetNewTaskQuery(2));
+			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(2));
+			task = taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task1V2, task);
 			task.State = TaskState.Done;
 
-			task = taskCommandComponent.Handle(new GetNewTaskQuery(3));
-			Assert.IsNull(task);
+			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(3));
+			Assert.IsNull(taskDto);
 
 		}
 	}

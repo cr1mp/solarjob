@@ -1,9 +1,13 @@
 ﻿using System;
+using AutoMapper;
 using BLL.Commands.ChangeState;
 using BLL.Commands.Create;
 using BLL.Components;
 using BLL.Queries;
+using WcfServer.Startup;
 using WcfServer.V1.Dtos;
+using Microsoft.Practices.Unity;
+using System.Transactions;
 
 namespace WcfServer.V1
 {
@@ -12,24 +16,19 @@ namespace WcfServer.V1
 	{
 		protected readonly TaskCommandHandlers _taskCommandHandlers;
 		protected readonly TaskQueryHandlers _taskQueryHandlers;
+		protected readonly IMapper _mapper;
 
-		public CommandService(TaskCommandHandlers taskCommandHandlers, TaskQueryHandlers taskQueryHandlers )
+		public CommandService( )
 		{
-			_taskCommandHandlers = taskCommandHandlers;
-			_taskQueryHandlers = taskQueryHandlers;
+			_mapper = UnityContainerSingelton.Instance.Resolve<IMapper>();
+
+			_taskCommandHandlers = UnityContainerSingelton.Instance.Resolve<TaskCommandHandlers>();
+			_taskQueryHandlers = UnityContainerSingelton.Instance.Resolve<TaskQueryHandlers>();
 		}
 
-		public CommandDto GetCommand()
+		public virtual CommandDto GetCommand()
 		{
-			var task = _taskQueryHandlers.Handle(new GetNewTaskQuery(1));
-			if (task == null)
-			{
-				return null;
-			}
-
-			_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id));
-
-			return new CommandDto();
+			return GetCommand(1);
 		}
 
 		public void Done(Guid commandId)
@@ -54,6 +53,26 @@ namespace WcfServer.V1
 		{
 			_taskCommandHandlers.Handle(new CreateFileTaskCreateCommand(command.StartTime,
 																		command.Name));
+		}
+
+		protected CommandDto GetCommand(int maxVersion)
+		{
+			using (var scope = new TransactionScope())
+			{
+				var task = _taskQueryHandlers.Handle(new GetNewTaskQuery(maxVersion));
+				if (task == null)
+				{
+					return null;
+				}
+
+				_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id));
+
+				scope.Complete();
+
+				return _mapper.Map<CommandDto>(task);
+			}
+
+			
 		}
 	}
 }

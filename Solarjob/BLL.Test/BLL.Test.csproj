@@ -40,6 +40,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Telerik.JustMock, Version=2016.2.426.1, Culture=neutral, PublicKeyToken=721b6c5bc0326b3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\JustMock.2016.2.426.1\lib\Net35\Telerik.JustMock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -63,9 +67,9 @@
       <Project>{8052C8D5-97CD-4F96-88A2-9D700DE34970}</Project>
       <Name>BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{8ECDF1CB-1688-4EFC-95BA-97CA56FE58FE}</Project>
-      <Name>DAL</Name>
+    <ProjectReference Include="..\DAL.Abstraction\DAL.Abstraction.csproj">
+      <Project>{9ea8e915-2d4c-43f4-b0a2-f7b0babba0c9}</Project>
+      <Name>DAL.Abstraction</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{495552C3-738B-4628-B53F-1BCCD0DEF41F}</Project>

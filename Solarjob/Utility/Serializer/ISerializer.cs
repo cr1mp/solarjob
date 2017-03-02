@@ -1,4 +1,4 @@
-﻿namespace BLL.Components
+﻿namespace Utility.Serializer
 {
 	public interface ISerializer
 	{

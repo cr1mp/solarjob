@@ -51,9 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{8ECDF1CB-1688-4EFC-95BA-97CA56FE58FE}</Project>
-      <Name>DAL</Name>
+    <ProjectReference Include="..\DAL.Abstraction\DAL.Abstraction.csproj">
+      <Project>{9ea8e915-2d4c-43f4-b0a2-f7b0babba0c9}</Project>
+      <Name>DAL.Abstraction</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

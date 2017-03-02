@@ -11,6 +11,9 @@ namespace WcfServer.V1.Dtos
 		public Guid Id { get; set; }
 
 		[DataMember]
-		public string StringValue { get; set; }
+		public string Name { get; set; }
+
+		[DataMember]
+		public string Params { get; set; }
 	}
 }

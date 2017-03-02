@@ -9,5 +9,7 @@ namespace Utility.Deserializer
 	public interface IDeserializer
 	{
 		T Deserialize<T>(string s);
+
+		object Deserialize(Type t, string s);
 	}
 }
