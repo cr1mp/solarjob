@@ -5,10 +5,11 @@ namespace BLL.Commands.Create
 	public class SendMessageTaskCreateCommand : StartTimeCommand
 	{
 		public SendMessageTaskCreateCommand(DateTime startTime,
+											string taskName,
 											string address,
 											string message,
 											string theme)
-			: base(startTime)
+			: base(startTime, taskName)
 		{
 			Address = address;
 			Message = message;

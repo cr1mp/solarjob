@@ -10,6 +10,9 @@ namespace WcfServer.V1.Dtos
 		public DateTime StartTime { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string FileName { get; set; }
+
+		[DataMember]
+		public string TaskName { get; set; }
 	}
 }

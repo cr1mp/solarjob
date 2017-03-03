@@ -2,14 +2,17 @@
 
 namespace Domain.Attributes
 {
-	public class TaskVersionAttribute : Attribute
+	/// <summary>
+	/// Для поддержки обратной совместимости клиентов храним версию с котрой началась поддержка этого типа задач.
+	/// </summary>
+	public class TaskStartClientVersionAttribute : Attribute
 	{
-		public TaskVersionAttribute( int startVersion)
+		public TaskStartClientVersionAttribute( int startClientVersion)
 		{
 			
-			StartVersion = startVersion;
+			StartClientVersion = startClientVersion;
 		}
 
-		public int StartVersion { get; set; } 
+		public int StartClientVersion { get; set; } 
 	}
 }

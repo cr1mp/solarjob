@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\TaskComponent.cs" />
+    <Compile Include="PL\Bootstrapper.cs" />
     <Compile Include="Service References\WcfServer.V1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

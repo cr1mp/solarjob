@@ -26,11 +26,11 @@ namespace ForFun
 		{
 			var neuro = new MyClass();
 
-			Thread.Sleep(10000);
+			//Thread.Sleep(10000);
 
-			VideoShow(neuro);
+			//VideoShow(neuro);
 
-			//SlideShow(neuro);
+			SlideShow(neuro);
 
 			Console.ReadLine();
 		}

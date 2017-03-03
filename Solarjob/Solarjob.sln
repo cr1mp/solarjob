@@ -34,6 +34,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WsClient", "WsClient\WsClie
 		{ED2A7BF7-03E1-46CD-9A13-EE0C24D07005} = {ED2A7BF7-03E1-46CD-9A13-EE0C24D07005}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{36C0E511-7FDF-41B0-99F9-9328866A8A6E}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

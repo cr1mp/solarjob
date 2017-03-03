@@ -8,10 +8,10 @@ using WcfServer.Startup;
 using WcfServer.V1.Dtos;
 using Microsoft.Practices.Unity;
 using System.Transactions;
+using WcfServer.Results;
 
 namespace WcfServer.V1
 {
-	// NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
 	public class CommandService : ICommandService
 	{
 		protected readonly TaskCommandHandlers _taskCommandHandlers;
@@ -26,36 +26,42 @@ namespace WcfServer.V1
 			_taskQueryHandlers = UnityContainerSingelton.Instance.Resolve<TaskQueryHandlers>();
 		}
 
-		public virtual CommandDto GetCommand()
+		public virtual Result<CommandDto> GetCommand(string clientName)
 		{
-			return GetCommand(1);
+			return new Result<CommandDto>( GetCommand(1, clientName));
 		}
 
-		public void Done(Guid commandId)
+		public Result Done(Guid commandId)
 		{
 			_taskCommandHandlers.Handle(new SetStateDoneCommand(commandId));
+			return new Result();
 		}
 
-		public void Fail(Guid commandId)
+		public Result Fail(Guid commandId)
 		{
-			_taskCommandHandlers.Handle(new SetStateNewCommand(commandId));
+			_taskCommandHandlers.Handle(new SetStateFailCommand(commandId));
+			return new Result();
 		}
 
-		public void AddTask(SendMessageCommandDto command)
+		public Result AddTask(SendMessageCommandDto command)
 		{
 			_taskCommandHandlers.Handle(new SendMessageTaskCreateCommand(command.StartTime,
+																		command.TaskName,
 																		command.Address,
 																		command.Message,
 																		command.Theme));
+			return new Result();
 		}
 
-		public void AddTask(CreateFileCommandDto command)
+		public Result AddTask(CreateFileCommandDto command)
 		{
 			_taskCommandHandlers.Handle(new CreateFileTaskCreateCommand(command.StartTime,
-																		command.Name));
+																		command.TaskName,
+																		command.FileName));
+			return new Result();
 		}
 
-		protected CommandDto GetCommand(int maxVersion)
+		protected CommandDto GetCommand(int maxVersion,string executor)
 		{
 			using (var scope = new TransactionScope())
 			{
@@ -65,7 +71,7 @@ namespace WcfServer.V1
 					return null;
 				}
 
-				_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id));
+				_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id, executor));
 
 				scope.Complete();
 

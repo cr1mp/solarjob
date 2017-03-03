@@ -14,6 +14,6 @@ namespace BLL.Queries
 								(task.StartTime<=DateTime.Now);
 		}
 
-		internal Expression<Func<Task, bool>> Expression { get; private set; }
+		internal Expression<Func<Job, bool>> Expression { get; private set; }
 	}
 }

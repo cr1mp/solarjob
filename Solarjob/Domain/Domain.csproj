@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\TaskNameAttribute.cs" />
+    <Compile Include="Attributes\TaskTypeAttribute.cs" />
     <Compile Include="Attributes\TaskVersionAttribute.cs" />
+    <Compile Include="Enums\MimeType.cs" />
     <Compile Include="Models\Params\New.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Enums\CommandState.cs" />

@@ -13,28 +13,41 @@ using BLL.Queries;
 using DAL.Abstraction;
 using Domain.Enums;
 using Domain.Models.Params;
+using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Utility.Deserializer;
 using Utility.Serializer;
-using Task = Domain.Models.Task;
+using Job = Domain.Models.Job;
 
 namespace BLL.Test
 {
 	[TestClass]
 	public class CommandTest
 	{
-		private IMapper _mapper;
 		private ISerializer _serializer;
-		private IUnitOfWorkFactory _factory;
+		EntityRepository<Job, Guid> _taskRepository;
+		private TaskCommandHandlers _taskCommandHandlers;
+		private TaskQueryHandlers _taskQueryHandlers;
+
 
 		[TestInitialize()]
 		public void Initialize()
 		{
 			var config = new MapperConfiguration(cfg => cfg.AddProfile(new BllAutoMapperProfile()));
-			_mapper = config.CreateMapper();
+			IMapper mapper = config.CreateMapper();
 			_serializer = new JsonSerializer();
-			_factory = Mock.Create<IUnitOfWorkFactory>();
+			IUnitOfWorkFactory factory = Mock.Create<IUnitOfWorkFactory>();
+			_taskRepository = new InMemoryRepository<Job>();
+			IEventAggregator eventAggregator = Mock.Create<IEventAggregator>();
+
+			_taskCommandHandlers = new TaskCommandHandlers(_taskRepository,
+															_serializer,
+															mapper,
+															factory,
+															eventAggregator);
+
+			_taskQueryHandlers = new TaskQueryHandlers(_taskRepository,mapper,factory);
 		}
 
 		[TestMethod]
@@ -42,17 +55,14 @@ namespace BLL.Test
 		{
 			var start = DateTime.Now;
 
-			EntityRepository<Task,Guid> taskRepository = new InMemoryRepository<Task>();
+			_taskRepository = new InMemoryRepository<Job>();
 			
-			ICommandHandler<SendMessageTaskCreateCommand> commandHandler = new TaskCommandHandlers(taskRepository,
-																								_serializer,
-																								_mapper,
-																								_factory);
+			ICommandHandler<SendMessageTaskCreateCommand> commandHandler = _taskCommandHandlers;
 
-			var command = new SendMessageTaskCreateCommand(start,"address","message", "theme");
+			var command = new SendMessageTaskCreateCommand(start, "name", "address","message", "theme");
 			commandHandler.Handle(command);
 
-			var tast = taskRepository.First();
+			var tast = _taskRepository.First();
 
 			Assert.IsNotNull(tast.Params);
 			var sendMessage = new JsonDeserializer().Deserialize<SendMessage>(tast.Params);
@@ -73,17 +83,14 @@ namespace BLL.Test
 		{
 			var start = DateTime.Now;
 
-			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
+			_taskRepository = new InMemoryRepository<Job>();
 			
-			ICommandHandler<CreateFileTaskCreateCommand> commandHandler = new TaskCommandHandlers(taskRepository,
-																								_serializer,
-																								_mapper,
-																								_factory);
+			ICommandHandler<CreateFileTaskCreateCommand> commandHandler = _taskCommandHandlers;
 
-			var command = new CreateFileTaskCreateCommand(start, "name");
+			var command = new CreateFileTaskCreateCommand(start, "name", "name");
 			commandHandler.Handle(command);
 
-			var task = taskRepository.First();
+			var task = _taskRepository.First();
 
 			Assert.IsNotNull(task.Params);
 			var sendMessane = new JsonDeserializer().Deserialize<CreateFile>(task.Params);
@@ -102,20 +109,17 @@ namespace BLL.Test
 		{
 			var start = DateTime.Now;
 
-			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
+			_taskRepository = new InMemoryRepository<Job>();
 
-			ICommandHandler<NewTaskCreateCommand> commandHandler = new TaskCommandHandlers(taskRepository,
-																							_serializer,
-																							_mapper,
-																							_factory);
+			ICommandHandler<NewTaskCreateCommand> commandHandler = _taskCommandHandlers;
 
-			var command = new NewTaskCreateCommand(start);
+			var command = new NewTaskCreateCommand(start,"name");
 			commandHandler.Handle(command);
 
-			var task = taskRepository.First();
+			var task = _taskRepository.First();
 
 			Assert.IsNotNull(task.Params);
-			var newTask = new JsonDeserializer().Deserialize<New>(task.Params);
+			var newTask = new JsonDeserializer().Deserialize<NewTask>(task.Params);
 
 			Assert.IsNotNull(newTask);
 
@@ -130,24 +134,21 @@ namespace BLL.Test
 		public void ChangeStateTask()
 		{
 			Guid taskId=Guid.Parse("{E79904A7-F442-454E-B8EF-01B1C1AACDD4}");
-			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
-			
-			taskRepository.Add(new Task
+			_taskRepository = new InMemoryRepository<Job>();
+
+			_taskRepository.Add(new Job
 			{
 				Id = taskId,
 				State = TaskState.New
 			});
-			TaskCommandHandlers taskCommandComponent = new TaskCommandHandlers(taskRepository,
-																				_serializer,
-																				_mapper,
-																				_factory);
+			TaskCommandHandlers taskCommandComponent = _taskCommandHandlers;
 
 
 			ICommandHandler<SetStateInProcessCommand> setStateInProcessCommandHandler1 = taskCommandComponent;
-			var setStateInProcessCommand = new SetStateInProcessCommand(taskId);
+			var setStateInProcessCommand = new SetStateInProcessCommand(taskId, "executor");
 			setStateInProcessCommandHandler1.Handle(setStateInProcessCommand);
 
-			var task = taskRepository.First();
+			var task = _taskRepository.First();
 
 			Assert.AreEqual(TaskState.InProcess, task.State);
 
@@ -156,18 +157,18 @@ namespace BLL.Test
 			var setStateDoneCommand = new SetStateDoneCommand(taskId);
 			setStateDoneCommandHandler.Handle(setStateDoneCommand);
 
-			task = taskRepository.First();
+			task = _taskRepository.First();
 
 			Assert.AreEqual(TaskState.Done, task.State);
 
 			task.State = TaskState.InProcess;
 
 
-			ICommandHandler<SetStateNewCommand> setStateNewCommandHandler = taskCommandComponent;
-			var setStateNewCommand = new SetStateNewCommand(taskId);
+			ICommandHandler<SetStateFailCommand> setStateNewCommandHandler = taskCommandComponent;
+			var setStateNewCommand = new SetStateFailCommand(taskId);
 			setStateNewCommandHandler.Handle(setStateNewCommand);
 
-			task = taskRepository.First();
+			task = _taskRepository.First();
 
 			Assert.AreEqual(TaskState.New, task.State);
 		}
@@ -175,13 +176,13 @@ namespace BLL.Test
 		[TestMethod]
 		public void GetTask()
 		{
-			var task1V1 = new Task
+			var task1V1 = new Job
 			{
 				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 16"),
 				Version = 1
 			};
-			var task2V1 = new Task
+			var task2V1 = new Job
 			{
 				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 17"),
@@ -189,54 +190,54 @@ namespace BLL.Test
 			};
 			
 
-			var task1V2 = new Task
+			var task1V2 = new Job
 			{
 				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 17"),
 				Version = 2
 			};
-			var task2V2 = new Task
+			var task2V2 = new Job
 			{
 				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("1990 10 16"),
 				Version = 2
 			};
 
-			var task1V3 = new Task
+			var task1V3 = new Job
 			{
 				Id = Guid.NewGuid(),
 				StartTime = DateTime.Parse("2018 10 16"),
 				Version = 3
 			};
 
-			EntityRepository<Task, Guid> taskRepository = new InMemoryRepository<Task>();
-			taskRepository.Add(task1V1);
-			taskRepository.Add(task2V1);
-			
-			taskRepository.Add(task1V2);
-			taskRepository.Add(task2V2);
+			_taskRepository = new InMemoryRepository<Job>();
+			_taskRepository.Add(task1V1);
+			_taskRepository.Add(task2V1);
 
-			taskRepository.Add(task1V3);
+			_taskRepository.Add(task1V2);
+			_taskRepository.Add(task2V2);
 
-			IQueryHandler<GetNewTaskQuery, TaskDto> taskCommandComponent = new TaskQueryHandlers(taskRepository,_mapper, _factory);
+			_taskRepository.Add(task1V3);
+
+			IQueryHandler<GetNewTaskQuery, TaskDto> taskCommandComponent = _taskQueryHandlers;
 
 			var taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(1));
-			var task = taskRepository.GetById(taskDto.Id);
+			var task = _taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task1V1, task);
 			task.State=TaskState.InProcess;
 
 			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(2));
-			task = taskRepository.GetById(taskDto.Id);
+			task = _taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task2V2, task);
 			task.State = TaskState.Done;
 
 			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(1));
-			task = taskRepository.GetById(taskDto.Id);
+			task = _taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task2V1, task);
 			task.State = TaskState.Done;
 
 			taskDto = taskCommandComponent.Handle(new GetNewTaskQuery(2));
-			task = taskRepository.GetById(taskDto.Id);
+			task = _taskRepository.GetById(taskDto.Id);
 			Assert.AreEqual(task1V2, task);
 			task.State = TaskState.Done;
 

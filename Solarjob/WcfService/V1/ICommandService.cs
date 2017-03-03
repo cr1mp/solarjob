@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using WcfServer.Results;
 using WcfServer.V1.Dtos;
 
 namespace WcfServer.V1
@@ -8,18 +9,18 @@ namespace WcfServer.V1
 	public interface ICommandService
 	{
 		[OperationContract]
-		CommandDto GetCommand();
+		Result<CommandDto> GetCommand(string clientName);
 
 		[OperationContract]
-		void Done(Guid commandId);
+		Result Done(Guid commandId);
 
 		[OperationContract]
-		void Fail(Guid commandId);
+		Result Fail(Guid commandId);
 
 		[OperationContract(Name = "AddSendMessageTask")]
-		void AddTask(SendMessageCommandDto command);
+		Result AddTask(SendMessageCommandDto command);
 
 		[OperationContract(Name = "AddCreateFileTask")]
-		void AddTask(CreateFileCommandDto command);
+		Result AddTask(CreateFileCommandDto command);
 	}
 }

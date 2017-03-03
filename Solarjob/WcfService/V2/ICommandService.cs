@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using WcfServer.Results;
 using WcfServer.V2.Dtos;
 
 namespace WcfServer.V2
@@ -7,6 +8,6 @@ namespace WcfServer.V2
 	public interface ICommandService : V1.ICommandService
 	{
 		[OperationContract(Name = "AddNewTask")]
-		void AddTask(NewCommandDto command);
+		Result AddTask(NewCommandDto command);
 	}
 }

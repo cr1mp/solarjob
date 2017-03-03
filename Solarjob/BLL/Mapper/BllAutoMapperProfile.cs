@@ -16,8 +16,8 @@ namespace BLL.Mapper
 		{
 			CreateMap<SendMessageTaskCreateCommand, SendMessage>();
 			CreateMap<CreateFileTaskCreateCommand, CreateFile>();
-			CreateMap<NewTaskCreateCommand, New> ();
-			CreateMap<Task, TaskDto> ();
+			CreateMap<NewTaskCreateCommand, NewTask> ();
+			CreateMap<Job, TaskDto> ();
 		}
 	}
 }

@@ -7,8 +7,8 @@ using Domain.Attributes;
 
 namespace Domain.Models.Params
 {
-	[TaskName("New"),TaskVersion(2)]
-	public class New
+	[TaskType("NewTask"),TaskStartClientVersion(2)]
+	public class NewTask
 	{
 		public string Param { get; set; }
 	}

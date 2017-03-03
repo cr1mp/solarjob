@@ -4,8 +4,8 @@ namespace BLL.Commands.Create
 {
 	public class NewTaskCreateCommand: StartTimeCommand
 	{
-		public NewTaskCreateCommand(DateTime startTime) 
-			: base(startTime)
+		public NewTaskCreateCommand(DateTime startTime,string taskName) 
+			: base(startTime, taskName)
 		{
 		}
 	}

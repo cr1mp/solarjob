@@ -15,14 +15,16 @@ namespace DAL.EF.Context
 			
 		}
 
-		public DbSet<Task> Tasks { get; set; }
+		public DbSet<Job> Tasks { get; set; }
 
-		/*protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Task>().HasKey(t=>t.Id);
-		}*/
+			modelBuilder.Entity<Job>()
+				.ToTable("Task")
+				.HasKey(t=>t.Id);
+		}
 
 		public void FixEfProviderServicesProblem()
 		{

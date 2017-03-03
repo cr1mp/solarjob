@@ -4,15 +4,15 @@ namespace BLL.Commands.Create
 {
 	public class CreateFileTaskCreateCommand: StartTimeCommand
 	{
-		public CreateFileTaskCreateCommand(DateTime startTime,string name)
-			: base(startTime)
+		public CreateFileTaskCreateCommand(DateTime startTime, string taskName, string fileName)
+			: base(startTime,taskName)
 		{
-			Name = name;
+			FileName = fileName;
 		}
 
 		public int Delay { get; set; } 
 
-		public string Name { get; set; }
+		public string FileName { get; set; }
 
 		
 	}

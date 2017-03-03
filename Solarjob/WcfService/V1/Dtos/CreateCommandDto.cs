@@ -17,5 +17,8 @@ namespace WcfServer.V1.Dtos
 
 		[DataMember]
 		public string Theme { get; set; }
+
+		[DataMember]
+		public string TaskName { get; set; }
 	}
 }

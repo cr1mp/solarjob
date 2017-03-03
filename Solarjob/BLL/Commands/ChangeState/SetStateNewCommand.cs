@@ -2,9 +2,9 @@
 
 namespace BLL.Commands.ChangeState
 {
-	public class SetStateNewCommand
+	public class SetStateFailCommand
 	{
-		public SetStateNewCommand(Guid taskId)
+		public SetStateFailCommand(Guid taskId)
 		{
 			TaskId = taskId;
 		}

@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.PubSubEvents.1.1.2\lib\portable-sl5+windowsphone8+windows8+net40+wpa81\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -51,6 +55,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLModule.cs" />
     <Compile Include="Commands\Create\CreateFileTaskCreateCommand.cs" />
     <Compile Include="Commands\Create\SendMessageTaskCreateCommand.cs" />
     <Compile Include="Commands\Create\NewTaskCreateCommand.cs" />
@@ -68,6 +74,10 @@
     <Compile Include="Commands\ChangeState\SetStateDoneCommand.cs" />
     <Compile Include="Container\BLLInitialization.cs" />
     <Compile Include="Dtos\TaskDto.cs" />
+    <Compile Include="EventHandlers\SetStateFailEventHandler.cs" />
+    <Compile Include="Events\SetStateFailEvent.cs" />
+    <Compile Include="Infrastructure\EventHandlers\EventAggregatorExtensions.cs" />
+    <Compile Include="Infrastructure\EventHandlers\IEventHandler.cs" />
     <Compile Include="Queries\GetNewTaskQuery.cs" />
     <Compile Include="Infrastructure\QueryHandlers\IQueryHandler.cs" />
     <Compile Include="Components\TaskCommandHandlers.cs" />

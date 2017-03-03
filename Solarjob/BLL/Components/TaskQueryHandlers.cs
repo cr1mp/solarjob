@@ -13,11 +13,11 @@ namespace BLL.Components
 {
 	public class TaskQueryHandlers : IQueryHandler<GetNewTaskQuery, TaskDto>
 	{
-		private readonly IRepository<Task> _taskRepository;
+		private readonly IRepository<Job> _taskRepository;
 		private readonly IMapper _mapper;
 		private readonly IUnitOfWorkFactory _factory;
 
-		public TaskQueryHandlers(IRepository<Task> taskRepository, IMapper mapper, IUnitOfWorkFactory factory)
+		public TaskQueryHandlers(IRepository<Job> taskRepository, IMapper mapper, IUnitOfWorkFactory factory)
 		{
 			_taskRepository = taskRepository;
 			_mapper = mapper;

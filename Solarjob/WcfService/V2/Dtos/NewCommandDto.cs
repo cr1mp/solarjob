@@ -8,5 +8,8 @@ namespace WcfServer.V2.Dtos
 	{
 		[DataMember]
 		public DateTime StartTime { get; set; }
+
+		[DataMember]
+		public string TaskName { get; set; }
 	}
 }
