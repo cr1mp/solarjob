@@ -77,6 +77,14 @@
     <Compile Include="Migrations\201703021333594_init.Designer.cs">
       <DependentUpon>201703021333594_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703032044040_AddColumnsToTask.cs" />
+    <Compile Include="Migrations\201703032044040_AddColumnsToTask.Designer.cs">
+      <DependentUpon>201703032044040_AddColumnsToTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703032047511_AddColumnMimeToTask.cs" />
+    <Compile Include="Migrations\201703032047511_AddColumnMimeToTask.Designer.cs">
+      <DependentUpon>201703032047511_AddColumnMimeToTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +105,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703021333594_init.resx">
       <DependentUpon>201703021333594_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703032044040_AddColumnsToTask.resx">
+      <DependentUpon>201703032044040_AddColumnsToTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703032047511_AddColumnMimeToTask.resx">
+      <DependentUpon>201703032047511_AddColumnMimeToTask.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

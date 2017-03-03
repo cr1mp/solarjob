@@ -22,7 +22,7 @@ namespace DAL.EF.Context
 			base.OnModelCreating(modelBuilder);
 
 			modelBuilder.Entity<Job>()
-				.ToTable("Task")
+				.ToTable("Tasks", "dbo")
 				.HasKey(t=>t.Id);
 		}
 

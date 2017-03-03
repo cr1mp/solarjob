@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DAL.Abstraction.Entities;
 
-namespace DAL.Abstraction
+namespace DAL.Abstraction.Repositories
 {
     public abstract class EntityReadOnlyRepository<TBusinessEntity, TKey> : IReadOnlyRepository<TBusinessEntity>
 		where TBusinessEntity : IEntity<TKey>

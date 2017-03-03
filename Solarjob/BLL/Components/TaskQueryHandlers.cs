@@ -7,6 +7,8 @@ using BLL.Dtos;
 using BLL.Infrastructure.QueryHandlers;
 using BLL.Queries;
 using DAL.Abstraction;
+using DAL.Abstraction.Repositories;
+using DAL.Abstraction.UoW;
 using Domain.Models;
 
 namespace BLL.Components

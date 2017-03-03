@@ -1,5 +1,6 @@
 ﻿using System;
 using DAL.Abstraction;
+using DAL.Abstraction.Entities;
 
 namespace Domain.Models
 {

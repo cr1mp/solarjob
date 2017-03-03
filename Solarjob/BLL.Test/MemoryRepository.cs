@@ -2,27 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using DAL.Abstraction;
+using DAL.Abstraction.Entities;
+using DAL.Abstraction.Repositories;
 
 namespace BLL.Test
 {
 	class InMemoryRepository <TEntity>: EntityRepository<TEntity, Guid> where TEntity : IEntity<Guid>
 	{
-		List<TEntity> memory;
+		private readonly List<TEntity> _memory;
 
 		public InMemoryRepository()
 		{
-			memory = new List<TEntity>();
+			_memory = new List<TEntity>();
 		}
 
-		protected override IQueryable<TEntity> All => memory.AsQueryable();
+		protected override IQueryable<TEntity> All => _memory.AsQueryable();
 		public override void Add(TEntity entity)
 		{
-			memory.Add(entity);
+			_memory.Add(entity);
 		}
 
 		public override void Delete(TEntity entity)
 		{
-			memory.Remove(entity);
+			_memory.Remove(entity);
+		}
+
+		public void Clear()
+		{
+			_memory.Clear();
 		}
 	}
 }

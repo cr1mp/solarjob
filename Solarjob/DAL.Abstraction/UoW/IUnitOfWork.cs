@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DAL.Abstraction
+namespace DAL.Abstraction.UoW
 {
 	/// <summary>
 	/// Интерфейс единицы работы.

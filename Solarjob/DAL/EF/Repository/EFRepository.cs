@@ -2,6 +2,8 @@
 using System.Data.Entity;
 using System.Linq;
 using DAL.Abstraction;
+using DAL.Abstraction.Entities;
+using DAL.Abstraction.Repositories;
 
 namespace DAL.EF.Repository
 {
@@ -42,6 +44,11 @@ namespace DAL.EF.Repository
 		public override void Delete(TBusinessEntity entity)
 		{
 			Table.Remove(entity);
+		}
+
+		public override TBusinessEntity GetByIdOrNull(TKey id)
+		{
+			return All.FirstOrDefault(x=> x.Id==id);
 		}
 	}
 }

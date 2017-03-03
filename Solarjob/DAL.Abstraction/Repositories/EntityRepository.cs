@@ -1,4 +1,6 @@
-﻿namespace DAL.Abstraction
+﻿using DAL.Abstraction.Entities;
+
+namespace DAL.Abstraction.Repositories
 {
 	public abstract class EntityRepository<TBusinessEntity, TKey> : EntityReadOnlyRepository<TBusinessEntity, TKey>, IRepository<TBusinessEntity>
 		where TBusinessEntity : IEntity<TKey>

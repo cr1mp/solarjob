@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using BLL.Commands;
 using BLL.Commands.ChangeState;
 using BLL.Commands.Create;
 using BLL.Components;
@@ -11,6 +10,7 @@ using BLL.Infrastructure.QueryHandlers;
 using BLL.Mapper;
 using BLL.Queries;
 using DAL.Abstraction;
+using DAL.Abstraction.UoW;
 using Domain.Enums;
 using Domain.Models.Params;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -26,7 +26,7 @@ namespace BLL.Test
 	public class CommandTest
 	{
 		private ISerializer _serializer;
-		EntityRepository<Job, Guid> _taskRepository;
+		InMemoryRepository<Job> _taskRepository;
 		private TaskCommandHandlers _taskCommandHandlers;
 		private TaskQueryHandlers _taskQueryHandlers;
 
@@ -39,7 +39,7 @@ namespace BLL.Test
 			_serializer = new JsonSerializer();
 			IUnitOfWorkFactory factory = Mock.Create<IUnitOfWorkFactory>();
 			_taskRepository = new InMemoryRepository<Job>();
-			IEventAggregator eventAggregator = Mock.Create<IEventAggregator>();
+			IEventAggregator eventAggregator = new EventAggregator();
 
 			_taskCommandHandlers = new TaskCommandHandlers(_taskRepository,
 															_serializer,
@@ -55,7 +55,7 @@ namespace BLL.Test
 		{
 			var start = DateTime.Now;
 
-			_taskRepository = new InMemoryRepository<Job>();
+			_taskRepository.Clear();
 			
 			ICommandHandler<SendMessageTaskCreateCommand> commandHandler = _taskCommandHandlers;
 
@@ -72,7 +72,8 @@ namespace BLL.Test
 			Assert.AreEqual("theme", sendMessage.Theme);
 
 			Assert.AreEqual(start, tast.StartTime);
-			Assert.AreEqual("SendMessage", tast.Name);
+			Assert.AreEqual("SendMessage", tast.Type);
+			Assert.AreEqual("name", tast.Name);
 			Assert.AreEqual(TaskState.New, tast.State);
 			Assert.AreEqual(1, tast.Version);
 
@@ -83,7 +84,7 @@ namespace BLL.Test
 		{
 			var start = DateTime.Now;
 
-			_taskRepository = new InMemoryRepository<Job>();
+			_taskRepository.Clear();
 			
 			ICommandHandler<CreateFileTaskCreateCommand> commandHandler = _taskCommandHandlers;
 
@@ -98,7 +99,8 @@ namespace BLL.Test
 			Assert.AreEqual("name", sendMessane.Name);
 
 			Assert.AreEqual(start, task.StartTime);
-			Assert.AreEqual("CreateFile", task.Name);
+			Assert.AreEqual("CreateFile", task.Type);
+			Assert.AreEqual("name", task.Name);
 			Assert.AreEqual(TaskState.New, task.State);
 			Assert.AreEqual(1, task.Version);
 
@@ -109,7 +111,7 @@ namespace BLL.Test
 		{
 			var start = DateTime.Now;
 
-			_taskRepository = new InMemoryRepository<Job>();
+			_taskRepository.Clear();
 
 			ICommandHandler<NewTaskCreateCommand> commandHandler = _taskCommandHandlers;
 
@@ -124,7 +126,8 @@ namespace BLL.Test
 			Assert.IsNotNull(newTask);
 
 			Assert.AreEqual(start, task.StartTime);
-			Assert.AreEqual("New", task.Name);
+			Assert.AreEqual("name", task.Name);
+			Assert.AreEqual("NewTask", task.Type);
 			Assert.AreEqual(TaskState.New, task.State);
 			Assert.AreEqual(2, task.Version);
 
@@ -134,7 +137,7 @@ namespace BLL.Test
 		public void ChangeStateTask()
 		{
 			Guid taskId=Guid.Parse("{E79904A7-F442-454E-B8EF-01B1C1AACDD4}");
-			_taskRepository = new InMemoryRepository<Job>();
+			_taskRepository.Clear() ;
 
 			_taskRepository.Add(new Job
 			{
@@ -144,9 +147,9 @@ namespace BLL.Test
 			TaskCommandHandlers taskCommandComponent = _taskCommandHandlers;
 
 
-			ICommandHandler<SetStateInProcessCommand> setStateInProcessCommandHandler1 = taskCommandComponent;
+			ICommandHandler<SetStateInProcessCommand> setStateInProcessCommandHandler = taskCommandComponent;
 			var setStateInProcessCommand = new SetStateInProcessCommand(taskId, "executor");
-			setStateInProcessCommandHandler1.Handle(setStateInProcessCommand);
+			setStateInProcessCommandHandler.Handle(setStateInProcessCommand);
 
 			var task = _taskRepository.First();
 
@@ -170,7 +173,7 @@ namespace BLL.Test
 
 			task = _taskRepository.First();
 
-			Assert.AreEqual(TaskState.New, task.State);
+			Assert.AreEqual(TaskState.Fail, task.State);
 		}
 
 		[TestMethod]
@@ -210,7 +213,7 @@ namespace BLL.Test
 				Version = 3
 			};
 
-			_taskRepository = new InMemoryRepository<Job>();
+			_taskRepository.Clear();
 			_taskRepository.Add(task1V1);
 			_taskRepository.Add(task2V1);
 

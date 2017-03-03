@@ -1,4 +1,5 @@
 ﻿using DAL.Abstraction;
+using DAL.Abstraction.UoW;
 using DAL.EF.ContextProvider;
 
 namespace DAL.EF.UoW

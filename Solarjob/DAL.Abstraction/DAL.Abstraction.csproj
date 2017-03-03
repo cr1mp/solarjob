@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstraction\EntityReadOnlyRepository.cs" />
-    <Compile Include="Abstraction\EntityRepository.cs" />
-    <Compile Include="Abstraction\IEntity.cs" />
-    <Compile Include="Abstraction\IReadOnlyRepository.cs" />
-    <Compile Include="Abstraction\IRepository.cs" />
-    <Compile Include="Abstraction\IUnitOfWork.cs" />
-    <Compile Include="Abstraction\IUnitOfWorkFactory.cs" />
+    <Compile Include="Repositories\EntityReadOnlyRepository.cs" />
+    <Compile Include="Repositories\EntityRepository.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Repositories\IReadOnlyRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="UoW\IUnitOfWork.cs" />
+    <Compile Include="UoW\IUnitOfWorkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

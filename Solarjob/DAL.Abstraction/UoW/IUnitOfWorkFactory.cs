@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstraction
+﻿namespace DAL.Abstraction.UoW
 {
 	/// <summary>
 	/// Интерфейс фабрики UnitOfWork.

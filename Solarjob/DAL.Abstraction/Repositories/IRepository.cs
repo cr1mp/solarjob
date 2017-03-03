@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstraction
+﻿namespace DAL.Abstraction.Repositories
 {
 	public interface IRepository<TBusinessEntity> : IReadOnlyRepository<TBusinessEntity>
 	{

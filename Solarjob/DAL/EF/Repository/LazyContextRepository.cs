@@ -1,5 +1,6 @@
 ﻿using System;
 using DAL.Abstraction;
+using DAL.Abstraction.Entities;
 using DAL.EF.ContextProvider;
 
 namespace DAL.EF.Repository

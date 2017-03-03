@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Abstraction;
+using DAL.Abstraction.Repositories;
 
 namespace Utility.Reposutory
 {

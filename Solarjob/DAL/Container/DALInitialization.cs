@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Abstraction;
+using DAL.Abstraction.Repositories;
+using DAL.Abstraction.UoW;
 using DAL.EF.ContextProvider;
 using DAL.EF.Repository;
 using DAL.EF.UoW;

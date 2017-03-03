@@ -1,4 +1,6 @@
 ﻿using System;
+using DAL.Abstraction;
+using DAL.Abstraction.Entities;
 using Domain.Enums;
 
 namespace Domain.Models
@@ -6,7 +8,7 @@ namespace Domain.Models
 	/// <summary>
 	/// Задача на выполнение.
 	/// </summary>
-	public class Job:Entity
+	public class Job:Entity, IEntity<Guid>
 	{
 		/// <summary>
 		/// Состояние задачи.
