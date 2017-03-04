@@ -14,14 +14,16 @@
       <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TaskName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Theme" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SendMessageCommandDto" nillable="true" type="tns:SendMessageCommandDto" />
   <xs:complexType name="CreateFileCommandDto">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TaskName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CreateFileCommandDto" nillable="true" type="tns:CreateFileCommandDto" />

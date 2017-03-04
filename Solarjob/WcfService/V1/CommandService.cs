@@ -7,7 +7,6 @@ using BLL.Queries;
 using WcfServer.Startup;
 using WcfServer.V1.Dtos;
 using Microsoft.Practices.Unity;
-using System.Transactions;
 using WcfServer.Results;
 
 namespace WcfServer.V1
@@ -18,7 +17,7 @@ namespace WcfServer.V1
 		protected readonly TaskQueryHandlers _taskQueryHandlers;
 		protected readonly IMapper _mapper;
 
-		public CommandService( )
+		public CommandService()
 		{
 			_mapper = UnityContainerSingelton.Instance.Resolve<IMapper>();
 
@@ -28,7 +27,7 @@ namespace WcfServer.V1
 
 		public virtual Result<CommandDto> GetCommand(string clientName)
 		{
-			return new Result<CommandDto>( GetCommand(1, clientName));
+			return new Result<CommandDto>(GetCommand(1, clientName));
 		}
 
 		public Result Done(Guid commandId)
@@ -61,24 +60,18 @@ namespace WcfServer.V1
 			return new Result();
 		}
 
-		protected CommandDto GetCommand(int maxVersion,string executor)
+		protected CommandDto GetCommand(int maxVersion, string executor)
 		{
-			using (var scope = new TransactionScope())
+			var task = _taskQueryHandlers.Handle(new GetNewTaskQuery(maxVersion));
+			if (task == null)
 			{
-				var task = _taskQueryHandlers.Handle(new GetNewTaskQuery(maxVersion));
-				if (task == null)
-				{
-					return null;
-				}
-
-				_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id, executor));
-
-				scope.Complete();
-
-				return _mapper.Map<CommandDto>(task);
+				return null;
 			}
 
-			
+			_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id, executor));
+
+			return _mapper.Map<CommandDto>(task);
+
 		}
 	}
 }

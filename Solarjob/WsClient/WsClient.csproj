@@ -91,7 +91,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\TaskComponent.cs" />
+    <Compile Include="PL\App\Application.cs" />
+    <Compile Include="PL\AppBuilder\ApplicationBuilder.cs" />
+    <Compile Include="PL\AppBuilder\ApplicationEnviroment.cs" />
     <Compile Include="PL\Bootstrapper.cs" />
+    <Compile Include="PL\App\IApplication.cs" />
+    <Compile Include="PL\AppBuilder\IApplicationBuilder.cs" />
+    <Compile Include="PL\AppBuilder\IApplicationEnviroment.cs" />
     <Compile Include="Service References\WcfServer.V1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,10 +122,16 @@
     <None Include="Service References\WcfServer.V1\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\WcfServer.V1\WcfServer.Results.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\WcfServer.V1\WcfServer.V1.Dtos.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WcfServer.V1\WsClient.WcfServer.V1.CommandDto.datasource">
+    <None Include="Service References\WcfServer.V1\WsClient.WcfServer.V1.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WcfServer.V1\WsClient.WcfServer.V1.ResultOfCommandDto3K_SeiaR2.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>
@@ -147,6 +159,7 @@
       <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using DAL.Abstraction;
 using DAL.Abstraction.Entities;
 using DAL.Abstraction.Repositories;
@@ -48,7 +49,7 @@ namespace DAL.EF.Repository
 
 		public override TBusinessEntity GetByIdOrNull(TKey id)
 		{
-			return All.FirstOrDefault(x=> x.Id==id);
+			return Table.Find(id);
 		}
 	}
 }

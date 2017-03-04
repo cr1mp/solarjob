@@ -15,6 +15,107 @@ namespace WsClient.WcfServer.V1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/WcfServer.Results")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(WsClient.WcfServer.V1.ResultOfCommandDto3K_SeiaR2))]
+    public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint ErrorCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorMessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSuccessField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint ErrorCode {
+            get {
+                return this.ErrorCodeField;
+            }
+            set {
+                if ((this.ErrorCodeField.Equals(value) != true)) {
+                    this.ErrorCodeField = value;
+                    this.RaisePropertyChanged("ErrorCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorMessage {
+            get {
+                return this.ErrorMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
+                    this.ErrorMessageField = value;
+                    this.RaisePropertyChanged("ErrorMessage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSuccess {
+            get {
+                return this.IsSuccessField;
+            }
+            set {
+                if ((this.IsSuccessField.Equals(value) != true)) {
+                    this.IsSuccessField = value;
+                    this.RaisePropertyChanged("IsSuccess");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfCommandDto3K_SeiaR2", Namespace="http://schemas.datacontract.org/2004/07/WcfServer.Results")]
+    [System.SerializableAttribute()]
+    public partial class ResultOfCommandDto3K_SeiaR2 : WsClient.WcfServer.V1.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private WsClient.WcfServer.V1.CommandDto ResultObjectField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public WsClient.WcfServer.V1.CommandDto ResultObject {
+            get {
+                return this.ResultObjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResultObjectField, value) != true)) {
+                    this.ResultObjectField = value;
+                    this.RaisePropertyChanged("ResultObject");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommandDto", Namespace="http://schemas.datacontract.org/2004/07/WcfServer.V1.Dtos")]
     [System.SerializableAttribute()]
     public partial class CommandDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -109,6 +210,9 @@ namespace WsClient.WcfServer.V1 {
         private System.DateTime StartTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TaskNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ThemeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -161,6 +265,19 @@ namespace WsClient.WcfServer.V1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TaskName {
+            get {
+                return this.TaskNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TaskNameField, value) != true)) {
+                    this.TaskNameField = value;
+                    this.RaisePropertyChanged("TaskName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Theme {
             get {
                 return this.ThemeField;
@@ -193,10 +310,13 @@ namespace WsClient.WcfServer.V1 {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
+        private string FileNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime StartTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TaskNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -209,14 +329,14 @@ namespace WsClient.WcfServer.V1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
+        public string FileName {
             get {
-                return this.NameField;
+                return this.FileNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
+                    this.FileNameField = value;
+                    this.RaisePropertyChanged("FileName");
                 }
             }
         }
@@ -230,6 +350,19 @@ namespace WsClient.WcfServer.V1 {
                 if ((this.StartTimeField.Equals(value) != true)) {
                     this.StartTimeField = value;
                     this.RaisePropertyChanged("StartTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TaskName {
+            get {
+                return this.TaskNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TaskNameField, value) != true)) {
+                    this.TaskNameField = value;
+                    this.RaisePropertyChanged("TaskName");
                 }
             }
         }
@@ -249,34 +382,34 @@ namespace WsClient.WcfServer.V1 {
     public interface ICommandService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/GetCommand", ReplyAction="http://tempuri.org/ICommandService/GetCommandResponse")]
-        WsClient.WcfServer.V1.CommandDto GetCommand();
+        WsClient.WcfServer.V1.ResultOfCommandDto3K_SeiaR2 GetCommand(string clientName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/GetCommand", ReplyAction="http://tempuri.org/ICommandService/GetCommandResponse")]
-        System.Threading.Tasks.Task<WsClient.WcfServer.V1.CommandDto> GetCommandAsync();
+        System.Threading.Tasks.Task<WsClient.WcfServer.V1.ResultOfCommandDto3K_SeiaR2> GetCommandAsync(string clientName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/Done", ReplyAction="http://tempuri.org/ICommandService/DoneResponse")]
-        void Done(System.Guid commandId);
+        WsClient.WcfServer.V1.Result Done(System.Guid commandId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/Done", ReplyAction="http://tempuri.org/ICommandService/DoneResponse")]
-        System.Threading.Tasks.Task DoneAsync(System.Guid commandId);
+        System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> DoneAsync(System.Guid commandId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/Fail", ReplyAction="http://tempuri.org/ICommandService/FailResponse")]
-        void Fail(System.Guid commandId);
+        WsClient.WcfServer.V1.Result Fail(System.Guid commandId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/Fail", ReplyAction="http://tempuri.org/ICommandService/FailResponse")]
-        System.Threading.Tasks.Task FailAsync(System.Guid commandId);
+        System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> FailAsync(System.Guid commandId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/AddSendMessageTask", ReplyAction="http://tempuri.org/ICommandService/AddSendMessageTaskResponse")]
-        void AddSendMessageTask(WsClient.WcfServer.V1.SendMessageCommandDto command);
+        WsClient.WcfServer.V1.Result AddSendMessageTask(WsClient.WcfServer.V1.SendMessageCommandDto command);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/AddSendMessageTask", ReplyAction="http://tempuri.org/ICommandService/AddSendMessageTaskResponse")]
-        System.Threading.Tasks.Task AddSendMessageTaskAsync(WsClient.WcfServer.V1.SendMessageCommandDto command);
+        System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> AddSendMessageTaskAsync(WsClient.WcfServer.V1.SendMessageCommandDto command);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/AddCreateFileTask", ReplyAction="http://tempuri.org/ICommandService/AddCreateFileTaskResponse")]
-        void AddCreateFileTask(WsClient.WcfServer.V1.CreateFileCommandDto command);
+        WsClient.WcfServer.V1.Result AddCreateFileTask(WsClient.WcfServer.V1.CreateFileCommandDto command);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/AddCreateFileTask", ReplyAction="http://tempuri.org/ICommandService/AddCreateFileTaskResponse")]
-        System.Threading.Tasks.Task AddCreateFileTaskAsync(WsClient.WcfServer.V1.CreateFileCommandDto command);
+        System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> AddCreateFileTaskAsync(WsClient.WcfServer.V1.CreateFileCommandDto command);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -306,43 +439,43 @@ namespace WsClient.WcfServer.V1 {
                 base(binding, remoteAddress) {
         }
         
-        public WsClient.WcfServer.V1.CommandDto GetCommand() {
-            return base.Channel.GetCommand();
+        public WsClient.WcfServer.V1.ResultOfCommandDto3K_SeiaR2 GetCommand(string clientName) {
+            return base.Channel.GetCommand(clientName);
         }
         
-        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.CommandDto> GetCommandAsync() {
-            return base.Channel.GetCommandAsync();
+        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.ResultOfCommandDto3K_SeiaR2> GetCommandAsync(string clientName) {
+            return base.Channel.GetCommandAsync(clientName);
         }
         
-        public void Done(System.Guid commandId) {
-            base.Channel.Done(commandId);
+        public WsClient.WcfServer.V1.Result Done(System.Guid commandId) {
+            return base.Channel.Done(commandId);
         }
         
-        public System.Threading.Tasks.Task DoneAsync(System.Guid commandId) {
+        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> DoneAsync(System.Guid commandId) {
             return base.Channel.DoneAsync(commandId);
         }
         
-        public void Fail(System.Guid commandId) {
-            base.Channel.Fail(commandId);
+        public WsClient.WcfServer.V1.Result Fail(System.Guid commandId) {
+            return base.Channel.Fail(commandId);
         }
         
-        public System.Threading.Tasks.Task FailAsync(System.Guid commandId) {
+        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> FailAsync(System.Guid commandId) {
             return base.Channel.FailAsync(commandId);
         }
         
-        public void AddSendMessageTask(WsClient.WcfServer.V1.SendMessageCommandDto command) {
-            base.Channel.AddSendMessageTask(command);
+        public WsClient.WcfServer.V1.Result AddSendMessageTask(WsClient.WcfServer.V1.SendMessageCommandDto command) {
+            return base.Channel.AddSendMessageTask(command);
         }
         
-        public System.Threading.Tasks.Task AddSendMessageTaskAsync(WsClient.WcfServer.V1.SendMessageCommandDto command) {
+        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> AddSendMessageTaskAsync(WsClient.WcfServer.V1.SendMessageCommandDto command) {
             return base.Channel.AddSendMessageTaskAsync(command);
         }
         
-        public void AddCreateFileTask(WsClient.WcfServer.V1.CreateFileCommandDto command) {
-            base.Channel.AddCreateFileTask(command);
+        public WsClient.WcfServer.V1.Result AddCreateFileTask(WsClient.WcfServer.V1.CreateFileCommandDto command) {
+            return base.Channel.AddCreateFileTask(command);
         }
         
-        public System.Threading.Tasks.Task AddCreateFileTaskAsync(WsClient.WcfServer.V1.CreateFileCommandDto command) {
+        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> AddCreateFileTaskAsync(WsClient.WcfServer.V1.CreateFileCommandDto command) {
             return base.Channel.AddCreateFileTaskAsync(command);
         }
     }

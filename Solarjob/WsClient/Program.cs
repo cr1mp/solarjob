@@ -9,7 +9,13 @@ namespace WsClient
 		/// </summary>
 		private static void Main(params string[] param)
 		{
-			new Bootstrapper().RunApplication(param);
+			var application = new ApplicationBuilder()
+				.ConfigireContainer(container=>)
+				//.UseParams(param)
+				.Build();
+
+
+			application.Run();
 		}
 	}
 }

@@ -6,6 +6,9 @@ using Microsoft.Practices.Unity;
 
 namespace WcfServer.Startup
 {
+	/// <summary>
+	/// Singelton контейнер для WCF.
+	/// </summary>
 	public sealed class UnityContainerSingelton 
     {
 		private static readonly Lazy<IUnityContainer> _instance=
@@ -24,6 +27,7 @@ namespace WcfServer.Startup
 			var config = new MapperConfiguration(cfg =>
 			{
 				cfg.AddProfile(new BllAutoMapperProfile());
+				cfg.AddProfile(new PLAutoMapperProfile());
 			});
 			container.BLLInitialize()
                 .RegisterType<V1.ICommandService, V1.CommandService>()
