@@ -47,6 +47,7 @@
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Deserializer\IDeserializer.cs" />
     <Compile Include="Deserializer\JsonDeserializer.cs" />
+    <Compile Include="Deserializer\XmlDeserializer.cs" />
     <Compile Include="Email\EmailMessage.cs" />
     <Compile Include="Email\IEmailSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -16,6 +16,8 @@ namespace WcfServer.V1
 		protected readonly TaskCommandHandlers _taskCommandHandlers;
 		protected readonly TaskQueryHandlers _taskQueryHandlers;
 		protected readonly IMapper _mapper;
+		// Маркер блокировки.
+		private static readonly object ThreadLock = new object();
 
 		public CommandService()
 		{
@@ -60,15 +62,26 @@ namespace WcfServer.V1
 			return new Result();
 		}
 
+		public Result Ping()
+		{
+			return new Result();
+		}
+
 		protected CommandDto GetCommand(int maxVersion, string executor)
 		{
-			var task = _taskQueryHandlers.Handle(new GetNewTaskQuery(maxVersion));
-			if (task == null)
-			{
-				return null;
-			}
 
-			_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id, executor));
+			BLL.Dtos.TaskDto task;
+
+			lock (ThreadLock)
+			{
+				task = _taskQueryHandlers.Handle(new GetNewTaskQuery(maxVersion));
+				if (task == null)
+				{
+					return null;
+				}
+
+				_taskCommandHandlers.Handle(new SetStateInProcessCommand(task.Id, executor));
+			}
 
 			return _mapper.Map<CommandDto>(task);
 

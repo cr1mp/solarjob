@@ -1,4 +1,4 @@
-﻿namespace WsClient
+﻿namespace WsClient.PL.WindowsServiceClient
 {
 	partial class TaskerWsClient
 	{

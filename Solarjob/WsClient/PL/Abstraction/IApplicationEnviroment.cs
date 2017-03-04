@@ -1,4 +1,4 @@
-﻿namespace WsClient.PL
+﻿namespace WsClient.PL.Abstraction
 {
 	internal interface IApplicationEnviroment
 	{

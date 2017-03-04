@@ -410,6 +410,12 @@ namespace WsClient.WcfServer.V1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/AddCreateFileTask", ReplyAction="http://tempuri.org/ICommandService/AddCreateFileTaskResponse")]
         System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> AddCreateFileTaskAsync(WsClient.WcfServer.V1.CreateFileCommandDto command);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/Ping", ReplyAction="http://tempuri.org/ICommandService/PingResponse")]
+        WsClient.WcfServer.V1.Result Ping();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICommandService/Ping", ReplyAction="http://tempuri.org/ICommandService/PingResponse")]
+        System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> PingAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -477,6 +483,14 @@ namespace WsClient.WcfServer.V1 {
         
         public System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> AddCreateFileTaskAsync(WsClient.WcfServer.V1.CreateFileCommandDto command) {
             return base.Channel.AddCreateFileTaskAsync(command);
+        }
+        
+        public WsClient.WcfServer.V1.Result Ping() {
+            return base.Channel.Ping();
+        }
+        
+        public System.Threading.Tasks.Task<WsClient.WcfServer.V1.Result> PingAsync() {
+            return base.Channel.PingAsync();
         }
     }
 }

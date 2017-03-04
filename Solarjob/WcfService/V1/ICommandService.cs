@@ -22,5 +22,8 @@ namespace WcfServer.V1
 
 		[OperationContract(Name = "AddCreateFileTask")]
 		Result AddTask(CreateFileCommandDto command);
+
+		[OperationContract]
+		Result Ping();
 	}
 }

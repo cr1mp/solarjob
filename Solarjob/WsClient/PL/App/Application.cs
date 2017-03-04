@@ -1,26 +1,34 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using WsClient.PL.Abstraction;
 
-namespace WsClient.PL
+namespace WsClient.PL.App
 {
 	internal class Application:IApplication
 	{
-		
+		private readonly IUnityContainer _container;
+		private IClient Client;
 
-		public Application()
+		public Application(IUnityContainer container)
 		{
-			
+			_container = container;
 		}
-
-		
 
 		public void Run()
 		{
-			throw new NotImplementedException();
+			Client.Start();
 		}
 
 		public void Dispose()
 		{
-			throw new NotImplementedException();
+			Client.Dispose();
+		}
+
+		public void Initialize()
+		{
+			if (Client == null)
+			{
+				Client = _container.Resolve<IClient>();
+			}
 		}
 	}
 }

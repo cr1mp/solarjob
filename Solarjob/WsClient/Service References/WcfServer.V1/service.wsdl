@@ -38,6 +38,12 @@
   <wsdl:message name="ICommandService_AddCreateFileTask_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddCreateFileTaskResponse" />
   </wsdl:message>
+  <wsdl:message name="ICommandService_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="ICommandService_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
   <wsdl:portType name="ICommandService">
     <wsdl:operation name="GetCommand">
       <wsdl:input wsaw:Action="http://tempuri.org/ICommandService/GetCommand" message="tns:ICommandService_GetCommand_InputMessage" />
@@ -58,6 +64,10 @@
     <wsdl:operation name="AddCreateFileTask">
       <wsdl:input wsaw:Action="http://tempuri.org/ICommandService/AddCreateFileTask" message="tns:ICommandService_AddCreateFileTask_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICommandService/AddCreateFileTaskResponse" message="tns:ICommandService_AddCreateFileTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICommandService/Ping" message="tns:ICommandService_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICommandService/PingResponse" message="tns:ICommandService_Ping_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ICommandService" type="tns:ICommandService">
@@ -100,6 +110,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddCreateFileTask">
       <soap:operation soapAction="http://tempuri.org/ICommandService/AddCreateFileTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap:operation soapAction="http://tempuri.org/ICommandService/Ping" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
