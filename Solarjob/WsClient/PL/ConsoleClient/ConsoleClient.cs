@@ -22,7 +22,7 @@ namespace WsClient.PL.ConsoleClient
 			var cancelToken = new CancellationTokenSource();
 
 			Task.Factory.StartNew(() => _taskComponent.Start(), cancelToken.Token);
-			//Task.Factory.StartNew(() => _slider.SlideShow(), cancelToken.Token);
+			Task.Factory.StartNew(() => _slider.SlideShow(), cancelToken.Token);
 			Console.ReadLine();
 			cancelToken.Cancel();
 		}

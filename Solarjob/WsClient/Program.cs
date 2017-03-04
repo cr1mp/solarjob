@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.Practices.Unity;
 using Serilog;
+using WsClient.BLL;
 using WsClient.PL;
 using WsClient.PL.AppBuilder;
 using WsClient.PL.ConsoleClient;
@@ -24,6 +25,7 @@ namespace WsClient
 				.ConfigireContainer(ConfigContainer)
 				.ConfigureLogging(ConfigureLogging)
 				.ConfigureMappers(ConfigureMappers)
+				.ConfigureBLL()
 				.Build();
 
 			application.Run();

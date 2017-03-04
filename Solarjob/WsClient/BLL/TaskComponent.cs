@@ -1,5 +1,6 @@
 ﻿using System;
 using Utility;
+using WsClient.BLL.Infrastructure;
 using WsClient.WcfServer.V1;
 
 
@@ -9,22 +10,34 @@ namespace WsClient.BLL
 	{
 		private readonly ICommandService _server;
 		private readonly DeserializerFactory _deserializerFactory;
+		private readonly ICommandProcessor _commandProcessor;
 		private bool _isStopped;
 
-		public TaskComponent(ICommandService server, DeserializerFactory deserializerFactory)
+		public TaskComponent(ICommandService server, DeserializerFactory deserializerFactory,
+			ICommandProcessor commandProcessor)
 		{
 			_server = server;
 			_deserializerFactory = deserializerFactory;
+			_commandProcessor = commandProcessor;
 		}
 
 		public void Start()
 		{
 			while (!_isStopped)
 			{
-				if (!_server.Ping().IsSuccess)
+				try
 				{
+					if (!_server.Ping().IsSuccess)
+					{
+						continue;
+					}
+				}
+				catch (Exception ex)
+				{
+					
 					continue;
 				}
+				
 
 				var result = _server.GetCommand(Environment.MachineName);
 
@@ -47,11 +60,11 @@ namespace WsClient.BLL
 
 				try
 				{
-					Type t = AttributeHelper.GetTaskType(command.Name);
+					Type t = AttributeHelper.GetTaskType(command.Type);
 
 					var task = _deserializerFactory.CreateJsonDeserializer().Deserialize(t, command.Params);
 
-					Handle();
+					_commandProcessor.Process(task);
 
 					_server.Done(command.Id);
 				}
@@ -65,11 +78,6 @@ namespace WsClient.BLL
 		public void Stop()
 		{
 			_isStopped = true;
-		}
-
-		void Handle()
-		{
-			
 		}
 	}
 }

@@ -21,6 +21,8 @@ namespace BLL
 		{
 			_container = container;
 			_eventAggregator = eventAggregator;
+
+			Configure();
 		}
 
 		public void Configure()

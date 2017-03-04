@@ -39,9 +39,31 @@ namespace Utility
 		public static Type GetTaskType(string s)
 		{
 			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-			return assemblies.SelectMany(x => x.GetExportedTypes())
-				      .Where(x=>x.GetCustomAttributes().Any(a=>a is TaskTypeAttribute))
-					  .First(x=>(x.GetCustomAttributes() as TaskTypeAttribute).Type==s);
+
+			var handlerRegistrations =
+				from assembly in assemblies
+
+				from rType in assembly.GetExportedTypes()
+				where !rType.IsAbstract
+				where !rType.IsGenericType
+
+				let attributes =
+				from attr in rType.GetCustomAttributes(typeof(TaskTypeAttribute))
+				//where attr is TaskTypeAttribute
+				//where (attr as TaskTypeAttribute).Type == s
+				select attr
+				from attribute in attributes
+				select new { attribute, rType };
+
+			foreach (var handlerRegistration in handlerRegistrations)
+			{
+				if ((handlerRegistration.attribute as TaskTypeAttribute).Type == s)
+				{
+					return handlerRegistration.rType;
+				}
+			}
+
+			throw new InvalidOperationException();
 		}
 	}
 }

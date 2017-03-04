@@ -114,8 +114,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\ApplicationBuilderBLLExtensions.cs" />
+    <Compile Include="BLL\CommandHandlers\CreateFileCommandHandler.cs" />
+    <Compile Include="BLL\CommandHandlers\SendMessageCommandHandler.cs" />
+    <Compile Include="BLL\Infrastructure\ICommandHandler.cs" />
+    <Compile Include="BLL\Infrastructure\CommandProcessor.cs" />
     <Compile Include="BLL\DeserializeDecorator.cs" />
+    <Compile Include="BLL\Infrastructure\ICommandProcessor.cs" />
     <Compile Include="BLL\TaskComponent.cs" />
+    <None Include="Install.bat" />
+    <Compile Include="BLL\Infrastructure\UnityCommandProcessor.cs" />
     <Compile Include="PL\Abstraction\IClient.cs" />
     <Compile Include="PL\App\Application.cs" />
     <Compile Include="PL\AppBuilder\ApplicationBuilder.cs" />
@@ -207,6 +215,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{495552c3-738b-4628-b53f-1bccd0def41f}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{688e9e21-bfa2-49a5-9ae9-d7f33703ca0f}</Project>
       <Name>Utility</Name>

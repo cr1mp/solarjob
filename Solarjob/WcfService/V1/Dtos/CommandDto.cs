@@ -14,6 +14,9 @@ namespace WcfServer.V1.Dtos
 		public string Name { get; set; }
 
 		[DataMember]
+		public string Type { get; set; }
+
+		[DataMember]
 		public string Params { get; set; }
 	}
 }
